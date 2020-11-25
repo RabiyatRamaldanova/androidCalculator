@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -40,6 +39,8 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
+                android:onClick="onClickSetSign"
+                android:tag="10"
                 android:text="C"
                 android:textColor="#FDFDFD"
                 android:textSize="36sp"
@@ -54,7 +55,9 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
+                android:tag="11"
                 android:text="/"
+                android:onClick="onClickSetSign"
                 android:textColor="@color/design_default_color_error"
                 android:textSize="36sp"
                 app:backgroundTint="#FFEB3B" />
@@ -68,7 +71,9 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
+                android:tag="12"
                 android:text="*"
+                android:onClick="onClickSetSign"
                 android:textColor="@color/design_default_color_error"
                 android:textSize="36sp"
                 app:backgroundTint="#FFEB3B" />
@@ -82,7 +87,9 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
+                android:tag="13"
                 android:text="+"
+                android:onClick="onClickSetSign"
                 android:textColor="@color/design_default_color_error"
                 android:textSize="36sp"
                 app:backgroundTint="#FFEB3B" />
@@ -151,7 +158,9 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
+                android:tag="14"
                 android:text="-"
+                android:onClick="onClickSetSign"
                 android:textColor="@color/design_default_color_error"
                 android:textSize="36sp"
                 app:backgroundTint="#FFEB3B" />
@@ -220,7 +229,9 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
+                android:tag="15"
                 android:text="="
+                android:onClick="onClickSetSign"
                 android:textColor="@color/design_default_color_error"
                 android:textSize="36sp"
                 app:backgroundTint="#FFEB3B" />
