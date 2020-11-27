@@ -9,12 +9,14 @@ import android.widget.TextView
 import androidx.core.text.isDigitsOnly
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var stringfordisplay: String
 //    private var number1: Double = 0.0
     private var operation: Int =0
 
+    private var fisrtNum : Double = 0.0
     private lateinit var textView: TextView
     private var dotBool: Boolean = false
+    private var numberBool: Boolean = false
+    private var number1: Double = 0.0
 
     private lateinit var button0: Button
     private lateinit var button1: Button
@@ -56,58 +58,72 @@ class MainActivity : AppCompatActivity() {
         buttonEquality = findViewById(R.id.buttonEquality)
         buttonClean = findViewById(R.id.buttonClean)
         var dotBool: Boolean = false
+
     }
 
     fun onClickSetNumber(view: View) {
-        stringfordisplay = textView.text.toString()
 
-        if (view.id == buttonDot.id && !dotBool && stringfordisplay.isDigitsOnly() && !textView.text.isEmpty()){
-            textView.text = stringfordisplay + "."
+        if (view.id == buttonDot.id && !dotBool && textView.text.toString().isDigitsOnly() && !textView.text.isEmpty()){
+            textView.text = textView.text.toString() + "."
             dotBool = true
         } else if (view.id == buttonDot.id ) {
-            textView.text = stringfordisplay
+            textView.text = textView.text.toString()
         } else if (textView.text == "0") {
             if (view.id == buttonDot.id){
-                textView.text = stringfordisplay + "."
-            } else {
-                textView.text == "0"
+                textView.text = textView.text.toString() + "."
+            } else if (view.id != buttonDot.id) {
+                textView.text = view.tag.toString()
             }
-        } else if (stringfordisplay == "-" || stringfordisplay == "+" || stringfordisplay == "*" || stringfordisplay == "/") {
+        } else if (textView.text.toString() == "-" || textView.text.toString() == "+" || textView.text.toString() == "*" || textView.text.toString() == "/") {
             textView.text = view.tag.toString()
         }
-        else textView.text = stringfordisplay + view.tag.toString()
+        else textView.text = textView.text.toString() + view.tag.toString()
+
+        Log.i("stringfordisplay "  + textView.text.toString(), "Result")
+        Log.i("textview "  + textView.text, "Res")
+//        if(numberBool == true){
+//            fisrtNum = textView.text.toString().toDouble()
+//        }
 
     }
 
     fun onClickSetSign(view: View) {
+       // var number1: Double = 0.0
 
-        var number1: Double = 0.0
-
+        if (textView.text.isDigitsOnly() && !numberBool) {
+             number1 = textView.text.toString().toDouble()
+            numberBool = true
+        }
+        Log.i("number1  " + number1, "Re")
         if (view.id == buttonDevision.id) {
             textView.text = "/"
         }else if (view.id == buttonMultiple.id) {
             textView.text = "*"
+            numberBool = true
         }else if (view.id == buttonPlus.id) {
             textView.text = "+"
         }else if (view.id == buttonMinus.id) {
             textView.text = "-"
         }else if (view.id == buttonClean.id) {
             textView.text = ""
+           // number1 =  0.0
+
         }else if (view.id == buttonEquality.id){
-            if (operation == 11 && stringfordisplay != "0") {
-                textView.text = (number1/(stringfordisplay.toDouble())).toString()
+            if (operation == 11 && textView.text.toString() != "0") {
+                textView.text = (number1/(textView.text.toString().toDouble())).toString()
             } else if (operation == 12) {
-                textView.text = (number1*(stringfordisplay.toDouble())).toString()
+                textView.text = (number1*(textView.text.toString().toDouble())).toString()
             }else if (operation == 13) {
-                textView.text = (number1 + stringfordisplay.toDouble()).toString()
+                textView.text = (number1 + textView.text.toString().toDouble()).toString()
             }else if (operation == 14) {
-                textView.text = (number1 - stringfordisplay.toDouble()).toString()
+                textView.text = (number1 - textView.text.toString().toDouble()).toString()
+                number1 = textView.text.toString().toDouble()
             }
+            //numberBool = false
 
         }
-        operation == view.tag
-        Log.i("otvet" + " " +  operation.toString() + " " + "bla","MyResult")
-
+        operation = view.tag.toString().toInt()
+        Log.i("sign "  + textView.text.toString(), "R")
         dotBool = false
     }
 }
