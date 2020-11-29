@@ -9,14 +9,19 @@ import android.widget.TextView
 import androidx.core.text.isDigitsOnly
 
 class MainActivity : AppCompatActivity() {
-//    private var number1: Double = 0.0
-    private var operation: Int =0
+    //    private var number1: Double = 0.0
+    private var operation: String = ""
 
-    private var fisrtNum : Double = 0.0
+    private var fisrtNum: Double = 0.0
     private lateinit var textView: TextView
     private var dotBool: Boolean = false
     private var numberBool: Boolean = false
     private var number1: Double = 0.0
+    private var number2: Double = 0.0
+    private var checkLastSign: Boolean = false
+    private var  equality: Boolean = false
+    private var sign: Boolean = false
+    private var najalaNaChisli: Boolean = false
 
     private lateinit var button0: Button
     private lateinit var button1: Button
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonPlus: Button
     private lateinit var buttonEquality: Button
     private lateinit var buttonClean: Button
+    private lateinit var buttonRoot: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,74 +63,178 @@ class MainActivity : AppCompatActivity() {
         buttonPlus = findViewById(R.id.buttonPlus)
         buttonEquality = findViewById(R.id.buttonEquality)
         buttonClean = findViewById(R.id.buttonClean)
+        buttonRoot = findViewById(R.id.buttonRoot)
         var dotBool: Boolean = false
 
     }
 
     fun onClickSetNumber(view: View) {
 
-        if (view.id == buttonDot.id && !dotBool && textView.text.toString().isDigitsOnly() && !textView.text.isEmpty()){
+        Log.i("dooootBol" + dotBool,"Rrrr" )
+        if (view.id == buttonDot.id && dotBool == false && textView.text.toString()
+                .isDigitsOnly() && !textView.text.isEmpty() && checkLastSign == false) {
             textView.text = textView.text.toString() + "."
             dotBool = true
-        } else if (view.id == buttonDot.id ) {
-            textView.text = textView.text.toString()
-        } else if (textView.text == "0") {
-            if (view.id == buttonDot.id){
-                textView.text = textView.text.toString() + "."
-            } else if (view.id != buttonDot.id) {
-                textView.text = view.tag.toString()
-            }
-        } else if (textView.text.toString() == "-" || textView.text.toString() == "+" || textView.text.toString() == "*" || textView.text.toString() == "/") {
-            textView.text = view.tag.toString()
+        } else if (view.id == buttonDot.id && (textView.text.isEmpty() || textView.text.toString() == "+" || textView.text.toString() == "-" || textView.text.toString() == "*" || textView.text.toString() == "/")) {
+            textView.text = "0."
+            Log.i("bebebe", "Rrrr")
         }
-        else textView.text = textView.text.toString() + view.tag.toString()
 
-        Log.i("stringfordisplay "  + textView.text.toString(), "Result")
-        Log.i("textview "  + textView.text, "Res")
-//        if(numberBool == true){
-//            fisrtNum = textView.text.toString().toDouble()
+        if (checkLastSign == false) {
+//            if (textView.text == "0") {
+//            if (view.id == buttonDot.id) {
+//                textView.text = textView.text.toString() + "."
+//                Log.i("blablabla", "Rrrr")
+//            } else if (view.id != buttonDot.id) {
+//                textView.text = view.tag.toString()
+//                Log.i("bubub", "Rrrr")
+//            }
+//
 //        }
 
+            if (textView.text != "0") {
+                when (view.tag.toString().toInt()) {
+                    1, 2, 3, 4, 5, 6, 7, 8, 9 -> textView.text =
+                        textView.text.toString() + view.tag.toString()
+                }
+                buttonMinus.isClickable = true
+                buttonMultiple.isClickable = true
+                buttonDevision.isClickable = true
+                buttonEquality.isClickable = true
+                buttonPlus.isClickable = true
+                najalaNaChisli = true
+            }
+            else {
+                when (view.tag.toString().toInt()) {
+                    1, 2, 3, 4, 5, 6, 7, 8, 9 -> textView.text =  view.tag.toString()
+                }
+                buttonMinus.isClickable = true
+                buttonMultiple.isClickable = true
+                buttonDevision.isClickable = true
+                buttonEquality.isClickable = true
+                buttonPlus.isClickable = true
+                najalaNaChisli = true
+            }
+            if (view.tag.toString() == "0") {
+                if (textView.text.toString() == "0") {
+                    textView.text = "0"
+                } else if (!textView.text.toString().isEmpty()) {
+                    textView.text = textView.text.toString() + view.tag.toString()
+                } else if (textView.text.toString().isEmpty()) {
+                    textView.text = view.tag.toString()
+                }
+                buttonMinus.isClickable = true
+                buttonMultiple.isClickable = true
+                buttonDevision.isClickable = true
+                buttonEquality.isClickable = true
+                buttonPlus.isClickable = true
+                najalaNaChisli = true
+            }
+        }
+        else if (checkLastSign == true && view.id != buttonDot.id){
+            textView.text = view.tag.toString()
+            checkLastSign = false
+            buttonMinus.isClickable = true
+            buttonMultiple.isClickable = true
+            buttonDevision.isClickable = true
+            buttonEquality.isClickable = true
+            buttonPlus.isClickable = true
+
+            najalaNaChisli = true
+        }
+            number2 = textView.text.toString().toDouble()
+
+
+        findDot()
+    }
+
+    fun findDot() {
+        for (char in textView.text.toString()) {
+            if (char.toString() == ".") {
+                dotBool = true
+            }
+        }
+    }
+
+    fun checkForDoubleOrInt() {
+        var ostatok = textView.text.toString().toDouble() % 1
+        if (ostatok == 0.0) {
+            textView.text = (textView.text.toString().toDouble().toInt()).toString()
+        }
+        dotBool = false
     }
 
     fun onClickSetSign(view: View) {
-       // var number1: Double = 0.0
+        if (!textView.text.toString().isEmpty() && view.tag.toString() != "10"  && view.tag.toString() != "15") {
 
-        if (textView.text.isDigitsOnly() && !numberBool) {
-             number1 = textView.text.toString().toDouble()
-            numberBool = true
-        }
-        Log.i("number1  " + number1, "Re")
-        if (view.id == buttonDevision.id) {
-            textView.text = "/"
-        }else if (view.id == buttonMultiple.id) {
-            textView.text = "*"
-            numberBool = true
-        }else if (view.id == buttonPlus.id) {
-            textView.text = "+"
-        }else if (view.id == buttonMinus.id) {
-            textView.text = "-"
-        }else if (view.id == buttonClean.id) {
-            textView.text = ""
-           // number1 =  0.0
+            if (textView.text.toString() != "+"&& textView.text.toString() != "-"&& textView.text.toString() != "*"&&textView.text.toString() != "/"){
+                number1 = textView.text.toString().toDouble()}
 
-        }else if (view.id == buttonEquality.id){
-            if (operation == 11 && textView.text.toString() != "0") {
-                textView.text = (number1/(textView.text.toString().toDouble())).toString()
-            } else if (operation == 12) {
-                textView.text = (number1*(textView.text.toString().toDouble())).toString()
-            }else if (operation == 13) {
-                textView.text = (number1 + textView.text.toString().toDouble()).toString()
-            }else if (operation == 14) {
-                textView.text = (number1 - textView.text.toString().toDouble()).toString()
-                number1 = textView.text.toString().toDouble()
+
+            if (view.id == buttonDevision.id ) {
+                textView.text = "/"
+                checkLastSign = true
+                equality = false
+                //sign = true
+                najalaNaChisli = false
             }
-            //numberBool = false
-
+            else if (view.id == buttonRoot.id) {
+                if (textView.text.toString() != "-" && textView.text.toString() != "+" && textView.text.toString() != "/" && textView.text.toString() != "*" && !textView.text.toString().isEmpty()) {
+                    textView.text = ("%.6f".format(Math.sqrt(textView.text.toString().toDouble())).toDouble()).toString()
+                    checkForDoubleOrInt()
+                }
+            }
+            else if (view.id == buttonMultiple.id ) {
+                textView.text = "*"
+                numberBool = true
+                checkLastSign = true
+                equality = false
+                //sign = true
+                najalaNaChisli = false
+            } else if (view.id == buttonPlus.id ) {
+                textView.text = "+"
+                checkLastSign = true
+                equality = false
+                //sign = true
+                najalaNaChisli = false
+            } else if (view.id == buttonMinus.id ) {
+                textView.text = "-"
+                checkLastSign = true
+                equality = false
+                //sign = true
+                najalaNaChisli = false
+            }else if (view.tag.toString().toInt() == 44) {
+                textView.text =
+                    textView.text.substring(0, textView.text.length - 1)
+            }
+            operation = view.tag.toString()
+            dotBool = false
+        } else if (view.tag.toString() == "15" && equality == false && !textView.text.isEmpty() && najalaNaChisli == true) {
+            if (operation == "11" && textView.text.toString() != "0") {
+                textView.text = (("%.6f".format(number1/number2)).toDouble()).toString()
+            } else if (operation == "12") {
+                textView.text = (("%.6f".format(number1*number2)).toDouble()).toString()
+            } else if (operation == "13") {
+                textView.text = (("%.6f".format(number1+number2)).toDouble()).toString()
+            } else if (operation == "14") {
+                textView.text = (("%.6f".format(number1-number2)).toDouble()).toString()
+            }
+            equality = true
+            checkForDoubleOrInt()
+            sign = false
+        } else if (view.tag.toString() == "10") {
+            textView.text = ""
+            number1 = 0.0
+            number2 = 0.0
+            checkLastSign = false
+            dotBool= false
+            buttonMinus.isClickable = false
+            buttonMultiple.isClickable = false
+            buttonDevision.isClickable = false
+            buttonEquality.isClickable = false
+            buttonPlus.isClickable = false
         }
-        operation = view.tag.toString().toInt()
-        Log.i("sign "  + textView.text.toString(), "R")
-        dotBool = false
     }
 }
+
 
