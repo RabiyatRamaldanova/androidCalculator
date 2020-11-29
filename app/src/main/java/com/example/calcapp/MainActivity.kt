@@ -9,10 +9,8 @@ import android.widget.TextView
 import androidx.core.text.isDigitsOnly
 
 class MainActivity : AppCompatActivity() {
-    //    private var number1: Double = 0.0
     private var operation: String = ""
 
-    private var fisrtNum: Double = 0.0
     private lateinit var textView: TextView
     private var dotBool: Boolean = false
     private var numberBool: Boolean = false
@@ -64,33 +62,21 @@ class MainActivity : AppCompatActivity() {
         buttonEquality = findViewById(R.id.buttonEquality)
         buttonClean = findViewById(R.id.buttonClean)
         buttonRoot = findViewById(R.id.buttonRoot)
-        var dotBool: Boolean = false
 
     }
 
     fun onClickSetNumber(view: View) {
 
-        Log.i("dooootBol" + dotBool,"Rrrr" )
         if (view.id == buttonDot.id && dotBool == false && textView.text.toString()
                 .isDigitsOnly() && !textView.text.isEmpty() && checkLastSign == false) {
             textView.text = textView.text.toString() + "."
             dotBool = true
         } else if (view.id == buttonDot.id && (textView.text.isEmpty() || textView.text.toString() == "+" || textView.text.toString() == "-" || textView.text.toString() == "*" || textView.text.toString() == "/")) {
             textView.text = "0."
-            Log.i("bebebe", "Rrrr")
         }
 
         if (checkLastSign == false) {
-//            if (textView.text == "0") {
-//            if (view.id == buttonDot.id) {
-//                textView.text = textView.text.toString() + "."
-//                Log.i("blablabla", "Rrrr")
-//            } else if (view.id != buttonDot.id) {
-//                textView.text = view.tag.toString()
-//                Log.i("bubub", "Rrrr")
-//            }
-//
-//        }
+
 
             if (textView.text != "0") {
                 when (view.tag.toString().toInt()) {
@@ -175,7 +161,6 @@ class MainActivity : AppCompatActivity() {
                 textView.text = "/"
                 checkLastSign = true
                 equality = false
-                //sign = true
                 najalaNaChisli = false
             }
             else if (view.id == buttonRoot.id) {
@@ -189,19 +174,16 @@ class MainActivity : AppCompatActivity() {
                 numberBool = true
                 checkLastSign = true
                 equality = false
-                //sign = true
                 najalaNaChisli = false
             } else if (view.id == buttonPlus.id ) {
                 textView.text = "+"
                 checkLastSign = true
                 equality = false
-                //sign = true
                 najalaNaChisli = false
             } else if (view.id == buttonMinus.id ) {
                 textView.text = "-"
                 checkLastSign = true
                 equality = false
-                //sign = true
                 najalaNaChisli = false
             }else if (view.tag.toString().toInt() == 44) {
                 textView.text =
