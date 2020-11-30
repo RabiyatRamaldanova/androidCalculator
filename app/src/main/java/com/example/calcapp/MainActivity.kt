@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     private var  equality: Boolean = false
     private var sign: Boolean = false
     private var najalaNaChisli: Boolean = false
+    private  var errortext : String = "error"
+    private var trigger : Boolean = true
 
     private lateinit var button0: Button
     private lateinit var button1: Button
@@ -39,10 +41,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonEquality: Button
     private lateinit var buttonClean: Button
     private lateinit var buttonRoot: Button
+    private lateinit var buttonCE : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
+        buttonCE = findViewById(R.id.buttonCE)
         textView = findViewById(R.id.textView)
         buttonDot = findViewById(R.id.button27)
         button0 = findViewById(R.id.button0)
@@ -66,13 +70,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickSetNumber(view: View) {
-
-        if (view.id == buttonDot.id && dotBool == false && textView.text.toString()
-                .isDigitsOnly() && !textView.text.isEmpty() && checkLastSign == false) {
-            textView.text = textView.text.toString() + "."
-            dotBool = true
-        } else if (view.id == buttonDot.id && (textView.text.isEmpty() || textView.text.toString() == "+" || textView.text.toString() == "-" || textView.text.toString() == "*" || textView.text.toString() == "/")) {
-            textView.text = "0."
+        if (trigger == false) {
+            textView.text = ""
+            number2 = 0.0
+            number1 = 0.0
+            operation = ""
+            checkLastSign = false
+            trigger = false
+        } else {
+            if (view.id == buttonDot.id && dotBool == false && textView.text.toString()
+                    .isDigitsOnly() && !textView.text.isEmpty() && checkLastSign == false && trigger == true
+            ) {
+                textView.text = textView.text.toString() + "."
+                dotBool = true
+            } else if (view.id == buttonDot.id && (textView.text.isEmpty() || textView.text.toString() == "+" || textView.text.toString() == "-" || textView.text.toString() == "*" || textView.text.toString() == "/")) {
+                textView.text = "0."
+            }
         }
 
         if (checkLastSign == false) {
@@ -89,10 +102,9 @@ class MainActivity : AppCompatActivity() {
                 buttonEquality.isClickable = true
                 buttonPlus.isClickable = true
                 najalaNaChisli = true
-            }
-            else {
+            } else {
                 when (view.tag.toString().toInt()) {
-                    1, 2, 3, 4, 5, 6, 7, 8, 9 -> textView.text =  view.tag.toString()
+                    1, 2, 3, 4, 5, 6, 7, 8, 9 -> textView.text = view.tag.toString()
                 }
                 buttonMinus.isClickable = true
                 buttonMultiple.isClickable = true
@@ -116,8 +128,7 @@ class MainActivity : AppCompatActivity() {
                 buttonPlus.isClickable = true
                 najalaNaChisli = true
             }
-        }
-        else if (checkLastSign == true && view.id != buttonDot.id){
+        } else if (checkLastSign == true && view.id != buttonDot.id) {
             textView.text = view.tag.toString()
             checkLastSign = false
             buttonMinus.isClickable = true
@@ -128,7 +139,14 @@ class MainActivity : AppCompatActivity() {
 
             najalaNaChisli = true
         }
+        if (trigger == true) {
             number2 = textView.text.toString().toDouble()
+        }
+        else {
+            number2 = 0.0
+        }
+
+
 
 
         findDot()
@@ -153,7 +171,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickSetSign(view: View) {
         if (!textView.text.toString().isEmpty() && view.tag.toString() != "10"  && view.tag.toString() != "15") {
 
-            if (textView.text.toString() != "+"&& textView.text.toString() != "-"&& textView.text.toString() != "*"&&textView.text.toString() != "/"){
+            if (textView.text.toString() != "+"&& textView.text.toString() != "-"&& textView.text.toString() != "*"&&textView.text.toString() != "/" && textView.text != errortext){
                 number1 = textView.text.toString().toDouble()}
 
 
@@ -193,7 +211,38 @@ class MainActivity : AppCompatActivity() {
             dotBool = false
         } else if (view.tag.toString() == "15" && equality == false && !textView.text.isEmpty() && najalaNaChisli == true) {
             if (operation == "11" && textView.text.toString() != "0") {
+
+//                if (number2 != 0.0) {
+//                    Log.i("myau", "Result")
+//                    val dev = number1 / number2
+//                    val devString = dev.toString()
+//                    if (devString[devString.length - 1].toString() == "0" && devString[devString.length - 2].toString() == ".") {
+//                        val devasnwer = dev.toInt()
+//                        textView.text = devasnwer.toString()
+//                    } else {
+//                        val answerdev = dev
+//                        textView.text = answerdev.toString()
+//                    }
+//                }
+//                else {
+//                    textView.text = "error"
+//                    number1 = 0.0
+//                    number2 = 0.0
+//                }
                 textView.text = (("%.6f".format(number1/number2)).toDouble()).toString()
+            } else if (operation == "11" && textView.text.toString() == "0") {
+                textView.text = errortext
+                buttonDot.isClickable = false
+                buttonMultiple.isClickable = false
+                buttonDevision.isClickable = false
+                buttonMinus.isClickable = false
+                buttonPlus.isClickable = false
+                buttonEquality.isClickable = false
+                buttonClean.isClickable = false
+                buttonRoot.isClickable = false
+                buttonCE.isClickable = false
+                //dotBool= false
+                //textView.text = ""
             } else if (operation == "12") {
                 textView.text = (("%.6f".format(number1*number2)).toDouble()).toString()
             } else if (operation == "13") {
@@ -202,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                 textView.text = (("%.6f".format(number1-number2)).toDouble()).toString()
             }
             equality = true
-            checkForDoubleOrInt()
+           // checkForDoubleOrInt()
             sign = false
         } else if (view.tag.toString() == "10") {
             textView.text = ""
