@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonPlus: Button
     private lateinit var buttonEquality: Button
     private lateinit var buttonClean: Button
-    private lateinit var buttonRoot: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,11 +61,14 @@ class MainActivity : AppCompatActivity() {
         buttonPlus = findViewById(R.id.buttonPlus)
         buttonEquality = findViewById(R.id.buttonEquality)
         buttonClean = findViewById(R.id.buttonClean)
-        buttonRoot = findViewById(R.id.buttonRoot)
 
     }
 
     fun onClickSetNumber(view: View) {
+
+        if (textView.text == "Error") {
+            textView.text = ""
+        }
 
         if (view.id == buttonDot.id && dotBool == false && textView.text.toString()
                 .isDigitsOnly() && !textView.text.isEmpty() && checkLastSign == false) {
@@ -128,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
             najalaNaChisli = true
         }
+
             number2 = textView.text.toString().toDouble()
 
 
@@ -153,7 +157,7 @@ class MainActivity : AppCompatActivity() {
     fun onClickSetSign(view: View) {
         if (!textView.text.toString().isEmpty() && view.tag.toString() != "10"  && view.tag.toString() != "15") {
 
-            if (textView.text.toString() != "+"&& textView.text.toString() != "-"&& textView.text.toString() != "*"&&textView.text.toString() != "/"){
+            if (textView.text.toString() != "+" && textView.text.toString() != "-" && textView.text.toString() != "*" && textView.text.toString() != "/" && textView.text != "Error" ){
                 number1 = textView.text.toString().toDouble()}
 
 
@@ -162,14 +166,7 @@ class MainActivity : AppCompatActivity() {
                 checkLastSign = true
                 equality = false
                 najalaNaChisli = false
-            }
-            else if (view.id == buttonRoot.id) {
-                if (textView.text.toString() != "-" && textView.text.toString() != "+" && textView.text.toString() != "/" && textView.text.toString() != "*" && !textView.text.toString().isEmpty()) {
-                    textView.text = ("%.6f".format(Math.sqrt(textView.text.toString().toDouble())).toDouble()).toString()
-                    checkForDoubleOrInt()
-                }
-            }
-            else if (view.id == buttonMultiple.id ) {
+            } else if (view.id == buttonMultiple.id ) {
                 textView.text = "*"
                 numberBool = true
                 checkLastSign = true
@@ -186,23 +183,44 @@ class MainActivity : AppCompatActivity() {
                 equality = false
                 najalaNaChisli = false
             }else if (view.tag.toString().toInt() == 44) {
-                textView.text =
+                if (textView.text == "Error"){
+                    textView.text = ""
+                }else textView.text =
                     textView.text.substring(0, textView.text.length - 1)
             }
             operation = view.tag.toString()
             dotBool = false
         } else if (view.tag.toString() == "15" && equality == false && !textView.text.isEmpty() && najalaNaChisli == true) {
-            if (operation == "11" && textView.text.toString() != "0") {
-                textView.text = (("%.6f".format(number1/number2)).toDouble()).toString()
+            if (operation == "11") {
+                if (number2 == 0.0) {
+                    textView.text = "Error"
+                    operation = ""
+                    number1 = 0.0
+                    number2 = 0.0
+                    buttonPlus.isClickable = false
+                    buttonEquality.isClickable = false
+                    buttonDevision.isClickable = false
+                    buttonMultiple.isClickable  = false
+                    buttonMinus.isClickable = false
+                } else {
+                    textView.text = (("%.6f".format(number1 / number2)).toDouble()).toString()
+                    checkForDoubleOrInt()
+                }
             } else if (operation == "12") {
                 textView.text = (("%.6f".format(number1*number2)).toDouble()).toString()
+                checkForDoubleOrInt()
+
             } else if (operation == "13") {
                 textView.text = (("%.6f".format(number1+number2)).toDouble()).toString()
+                checkForDoubleOrInt()
+
             } else if (operation == "14") {
                 textView.text = (("%.6f".format(number1-number2)).toDouble()).toString()
+                checkForDoubleOrInt()
+
             }
             equality = true
-            checkForDoubleOrInt()
+            //checkForDoubleOrInt()
             sign = false
         } else if (view.tag.toString() == "10") {
             textView.text = ""

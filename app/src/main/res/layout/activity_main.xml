@@ -62,38 +62,6 @@
                 android:textSize="36sp"
                 app:backgroundTint="#F43D6B" />
 
-            <Button
-                android:id="@+id/buttonRoot"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:insetLeft="1dp"
-                android:insetTop="1dp"
-                android:insetRight="1dp"
-                android:insetBottom="1dp"
-                android:onClick="onClickSetSign"
-                android:tag="45"
-                android:text="√x"
-                android:textColor="@color/white"
-                android:textSize="36sp"
-                app:backgroundTint="#F43D6B" />
-
-            <Button
-                android:id="@+id/buttonDevision"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:insetLeft="1dp"
-                android:insetTop="1dp"
-                android:insetRight="1dp"
-                android:insetBottom="1dp"
-                android:onClick="onClickSetSign"
-                android:tag="11"
-                android:text="/"
-                android:textColor="@color/white"
-                android:textSize="36sp"
-                app:backgroundTint="#F43D6B" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -295,7 +263,7 @@
                 app:backgroundTint="@color/white" />
 
             <Button
-                android:id="@+id/buttonMinus"
+                android:id="@+id/buttonDevision"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -304,8 +272,8 @@
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
                 android:onClick="onClickSetSign"
-                android:tag="14"
-                android:text="-"
+                android:tag="11"
+                android:text="/"
                 android:textColor="@color/white"
                 android:textSize="36sp"
                 app:backgroundTint="#F43D6B" />
@@ -320,7 +288,7 @@
 
 
             <Button
-                android:id="@+id/button66"
+                android:id="@+id/button27"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -328,9 +296,12 @@
                 android:insetTop="1dp"
                 android:insetRight="1dp"
                 android:insetBottom="1dp"
-                android:text="Button"
-                android:textColor="@color/white"
-                app:backgroundTint="#F43D6B" />
+                android:onClick="onClickSetNumber"
+                android:tag="16"
+                android:text=","
+                android:textColor="#F43D6B"
+                android:textSize="36sp"
+                app:backgroundTint="@color/white" />
 
             <Button
                 android:id="@+id/button0"
@@ -349,22 +320,6 @@
                 app:backgroundTint="#FFFFFF" />
 
             <Button
-                android:id="@+id/button27"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:insetLeft="1dp"
-                android:insetTop="1dp"
-                android:insetRight="1dp"
-                android:insetBottom="1dp"
-                android:onClick="onClickSetNumber"
-                android:tag="16"
-                android:text="."
-                android:textColor="#F43D6B"
-                android:textSize="36sp"
-                app:backgroundTint="@color/white" />
-
-            <Button
                 android:id="@+id/buttonEquality"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -379,6 +334,22 @@
                 android:textColor="#F43D6B"
                 android:textSize="36sp"
                 app:backgroundTint="#FFF0F5" />
+
+            <Button
+                android:id="@+id/buttonMinus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:insetLeft="1dp"
+                android:insetTop="1dp"
+                android:insetRight="1dp"
+                android:insetBottom="1dp"
+                android:onClick="onClickSetSign"
+                android:tag="14"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                app:backgroundTint="#F43D6B" />
 
         </LinearLayout>
     </LinearLayout>
